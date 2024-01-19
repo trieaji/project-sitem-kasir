@@ -1,0 +1,4 @@
+Tugasnya nanti ;
+0. Membuat function untuk jwt (membuat file jwt.go)
+1. Ke middleware
+2. Ke service login
