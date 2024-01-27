@@ -73,6 +73,22 @@ func (repository *UserRepositoryImpl) FindEmail(ctx context.Context, tx *sql.Tx,
 	}
 }
 
+func (repository *UserRepositoryImpl) FindRole(ctx context.Context, tx *sql.Tx, userRole any) (domain.Users, error) {
+	SQL := "select role from users where role = ?"
+	rows, err := tx.QueryContext(ctx, SQL, userRole)
+	helper.PanicIfError(err)
+	defer rows.Close()
+
+	user := domain.Users{}
+	if rows.Next() {
+		err := rows.Scan(&user.Role)
+		helper.PanicIfError(err)
+		return user, nil
+	} else {
+		return user, errors.New("role is not found")
+	}
+}
+
 func (repository *UserRepositoryImpl) UpdateTkn(ctx context.Context, tx *sql.Tx, user domain.Users) domain.Users {
 	SQL := "update users set token = ? where email = ?"
 	_, err := tx.ExecContext(ctx, SQL, user.Token, user.Email)
