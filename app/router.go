@@ -7,7 +7,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func RouterAuth(categoryController controller.CategoryController, paymentController controller.PaymentController, userController controller.UserController) *httprouter.Router {
+func RouterAuth(categoryController controller.CategoryController, paymentController controller.PaymentController, userController controller.UserController, productController controller.ProductController) *httprouter.Router {
 	router := httprouter.New()
 
 	//register
@@ -36,6 +36,13 @@ func RouterAuth(categoryController controller.CategoryController, paymentControl
 	router.GET("/api/users/:userId",middleware.AuthJWTMiddleware(userController.FindById))
 	router.GET("/api/users",middleware.AuthJWTMiddleware(userController.FindAll))
 	router.DELETE("/api/auth/users/logout",middleware.AuthJWTMiddleware(userController.Logout))
+
+	//product
+	router.POST("/api/products", productController.Create)
+	router.PUT("/api/products/:productId",middleware.AuthJWTMiddleware(productController.Update))
+	router.DELETE("/api/products/:productId",productController.Delete)
+	router.GET("/api/products/:productId",middleware.AuthJWTMiddleware(productController.FindById))
+	router.GET("/api/products",productController.FindAll)
 
 	return router
 }
