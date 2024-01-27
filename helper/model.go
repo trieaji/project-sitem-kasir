@@ -73,3 +73,24 @@ func ToUserResponses(users []domain.Users) []web.UserResponse {
 
 	return userResponse
 }
+
+func ToProductResponse(product domain.Products) web.ProductResponse {
+	return web.ProductResponse {
+		Id: product.Id,
+		Sku: product.Sku,
+		Name: product.Name,
+		Stock: product.Stock,
+		Price: product.Price,
+		CategoryId: product.CategoryId,
+	}
+}
+
+func ToProductResponses(products []domain.Products) []web.ProductResponse {
+	var productResponse []web.ProductResponse
+
+	for _, product := range products {
+		productResponse = append(productResponse, ToProductResponse(product))
+	}
+
+	return productResponse
+}
