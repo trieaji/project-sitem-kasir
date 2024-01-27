@@ -29,7 +29,11 @@ func main() {
 	userService := service.NewUserService(userRepository, db , validate)
 	userController := controller.NewUserController(userService)
 
-	router := app.RouterAuth(categoryController,paymentController,userController)
+	productRepository := repository.NewProductRepository()
+	productService := service.NewProductService(productRepository, db , validate)
+	productController := controller.NewProductController(productService)
+
+	router := app.RouterAuth(categoryController,paymentController,userController,productController)
 
 	server := http.Server {
 		Addr:"localhost:4007",
