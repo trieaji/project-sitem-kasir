@@ -12,6 +12,7 @@ type UserRepository interface {
 	Delete(ctx context.Context, tx *sql.Tx, user domain.Users)
 	FindById(ctx context.Context, tx *sql.Tx, userId int) (domain.Users, error)
 	FindEmail(ctx context.Context, tx *sql.Tx, userMail any) (domain.Users, error)
+	FindRole(ctx context.Context, tx *sql.Tx, userRole any) (domain.Users, error)
 	UpdateTkn(ctx context.Context, tx *sql.Tx, user domain.Users) domain.Users
 	FindAll(ctx context.Context, tx *sql.Tx) []domain.Users
 }
